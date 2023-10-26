@@ -2,10 +2,6 @@ set dotenv-load
 
 default: list
 
-# full:
-#     tmux new-window -n backend 'just dev'
-#     tmux new-window -n frontend 'just worker'
-
 # lists available tasks
 @list:
     just --list
@@ -16,7 +12,7 @@ init:
 
 # start the server
 dev:
-    go run ./cmd/api
+    watchexec -e go -c clear -r go run ./cmd/api
 
 # open the project in the browser
 open:
@@ -33,3 +29,6 @@ test:
 # Open the DB
 # db:
 #     pgcli $DATABASE_URL
+
+docs:
+    tmux new-window -n docs 'python3 -m http.server -b 0.0.0.0 -d ~/Downloads/lets-go-further/html'
