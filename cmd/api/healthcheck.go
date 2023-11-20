@@ -8,7 +8,6 @@ func (app *application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 	env := envelope{
 		"status": "available",
 		"system_info": map[string]string{
-
 			"environment": app.config.env,
 			"version":     version,
 		},
@@ -16,7 +15,6 @@ func (app *application) healthcheckHandler(w http.ResponseWriter, r *http.Reques
 
 	err := app.writeJSON(w, http.StatusOK, env, nil)
 	if err != nil {
-		app.logger.Error(err.Error())
-		http.Error(w, "The server encountered a problem and couldn't process your request", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
 	}
 }
